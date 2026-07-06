@@ -67,6 +67,12 @@ nav{
   .nav-links{display:none}
   .nav-mobile-btn{display:flex; align-items:center}
 }
+.drawer-link{
+  display:block; padding:11px 0; border-bottom:1px solid var(--line);
+  font:500 15px/1 var(--sans); color:var(--muted); transition:color .15s;
+}
+.drawer-link:last-child{border-bottom:none}
+.drawer-link:hover{color:var(--fg)}
 
 /* ── Hero ── */
 .hero{
@@ -301,12 +307,23 @@ footer{
     <a href="#about">关于</a>
     <a class="nav-cta" href="#community">加入社区</a>
   </div>
-  <button class="nav-mobile-btn" aria-label="菜单" onclick="this.nextElementSibling&&this.nextElementSibling.style">
+  <button class="nav-mobile-btn" aria-label="菜单" id="nav-toggle">
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/>
     </svg>
   </button>
 </nav>
+
+<!-- 移动端展开菜单 -->
+<div id="nav-drawer" style="display:none;position:fixed;inset:60px 0 auto;z-index:99;
+  background:rgba(8,9,16,.97);border-bottom:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 20px;backdrop-filter:blur(12px)">
+  <a href="#projects" class="drawer-link">项目</a>
+  <a href="#tutorials" class="drawer-link">教程</a>
+  <a href="#community" class="drawer-link">社区</a>
+  <a href="#about" class="drawer-link">关于</a>
+  <a href="#community" class="drawer-link" style="color:var(--accent2);font-weight:700">加入社区</a>
+</div>
 
 <!-- ══ Hero ══ -->
 <section class="hero">
@@ -604,6 +621,27 @@ document.querySelectorAll('.card').forEach(card => {
     card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
   });
 });
+
+/* 移动端导航抽屉 */
+(function() {
+  var btn = document.getElementById('nav-toggle');
+  var drawer = document.getElementById('nav-drawer');
+  if (!btn || !drawer) return;
+  var open = false;
+  btn.addEventListener('click', function() {
+    open = !open;
+    drawer.style.display = open ? 'block' : 'none';
+    btn.setAttribute('aria-expanded', open);
+  });
+  /* 点击菜单项后关闭抽屉 */
+  drawer.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      open = false;
+      drawer.style.display = 'none';
+      btn.setAttribute('aria-expanded', false);
+    });
+  });
+})();
 </script>
 </body>
 </html>

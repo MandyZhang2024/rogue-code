@@ -52,13 +52,13 @@ nav{
   transition:color .18s, background .18s;
 }
 .nav-links a:hover{color:var(--fg); background:rgba(255,255,255,.05)}
-.nav-cta{
-  padding:7px 16px !important; border-radius:8px !important;
-  background:var(--accent) !important; color:#fff !important;
-  font-weight:600 !important;
-  transition:opacity .18s !important;
+.nav-links .nav-cta{
+  padding:7px 16px; border-radius:8px;
+  background:var(--accent); color:#fff;
+  font-weight:600;
+  transition:opacity .18s;
 }
-.nav-cta:hover{opacity:.85 !important; background:var(--accent) !important}
+.nav-links .nav-cta:hover{opacity:.85; background:var(--accent)}
 .nav-mobile-btn{
   display:none; background:none; border:none; cursor:pointer;
   color:var(--muted); padding:4px;
@@ -73,6 +73,13 @@ nav{
 }
 .drawer-link:last-child{border-bottom:none}
 .drawer-link:hover{color:var(--fg)}
+.drawer-link-cta{color:var(--accent2); font-weight:700}
+.nav-drawer{
+  display:none; position:fixed; inset:60px 0 auto; z-index:99;
+  background:rgba(8,9,16,.97); border-bottom:1px solid var(--line);
+  padding:16px clamp(20px,5vw,60px) 20px; backdrop-filter:blur(12px);
+}
+.nav-drawer--open{display:block}
 
 /* ── Hero ── */
 .hero{
@@ -315,14 +322,12 @@ footer{
 </nav>
 
 <!-- 移动端展开菜单 -->
-<div id="nav-drawer" style="display:none;position:fixed;inset:60px 0 auto;z-index:99;
-  background:rgba(8,9,16,.97);border-bottom:1px solid var(--line);
-  padding:16px clamp(20px,5vw,60px) 20px;backdrop-filter:blur(12px)">
+<div id="nav-drawer" class="nav-drawer">
   <a href="#projects" class="drawer-link">项目</a>
   <a href="#tutorials" class="drawer-link">教程</a>
   <a href="#community" class="drawer-link">社区</a>
   <a href="#about" class="drawer-link">关于</a>
-  <a href="#community" class="drawer-link" style="color:var(--accent2);font-weight:700">加入社区</a>
+  <a href="#community" class="drawer-link drawer-link-cta">加入社区</a>
 </div>
 
 <!-- ══ Hero ══ -->
@@ -627,17 +632,14 @@ document.querySelectorAll('.card').forEach(card => {
   var btn = document.getElementById('nav-toggle');
   var drawer = document.getElementById('nav-drawer');
   if (!btn || !drawer) return;
-  var open = false;
   btn.addEventListener('click', function() {
-    open = !open;
-    drawer.style.display = open ? 'block' : 'none';
+    var open = drawer.classList.toggle('nav-drawer--open');
     btn.setAttribute('aria-expanded', open);
   });
   /* 点击菜单项后关闭抽屉 */
   drawer.querySelectorAll('a').forEach(function(a) {
     a.addEventListener('click', function() {
-      open = false;
-      drawer.style.display = 'none';
+      drawer.classList.remove('nav-drawer--open');
       btn.setAttribute('aria-expanded', false);
     });
   });

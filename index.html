@@ -642,15 +642,18 @@ document.querySelectorAll('.card').forEach(card => {
   var btn = document.getElementById('nav-toggle');
   var drawer = document.getElementById('nav-drawer');
   if (!btn || !drawer) return;
+  /* 用 JS 初始化初始状态，确保与 CSS 的 display:none 一致 */
+  btn.setAttribute('aria-expanded', 'false');
+  drawer.classList.remove('nav-drawer--open');
   btn.addEventListener('click', function() {
     var open = drawer.classList.toggle('nav-drawer--open');
-    btn.setAttribute('aria-expanded', open);
+    btn.setAttribute('aria-expanded', String(open));
   });
   /* 点击菜单项后关闭抽屉 */
   drawer.querySelectorAll('a').forEach(function(a) {
     a.addEventListener('click', function() {
       drawer.classList.remove('nav-drawer--open');
-      btn.setAttribute('aria-expanded', false);
+      btn.setAttribute('aria-expanded', 'false');
     });
   });
 })();

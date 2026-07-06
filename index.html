@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RogueCode Nexus · 极客资产交换站</title>
-  <meta name="description" content="RogueCode Nexus：AI 数字资产 + DIY AI 硬件交易与开源协作平台，支持现金担保交易与极客以物易物。">
+  <meta name="description" content="RogueCode Nexus: AI 数字资产 + DIY AI 硬件交易与开源协作平台，支持现金担保交易与极客以物易物。">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%BE%3C/text%3E%3C/svg%3E">
   <style>
     :root {
@@ -539,7 +539,7 @@
         <article class="card">
           <h3>支付与结算链路</h3>
           <ul class="list-tight">
-            <li>统一支付网关：Alipay / WeChat / Stripe Adapter</li>
+            <li>统一支付网关：Alipay / WeChat Pay / Stripe</li>
             <li>资金链路：买家付款至第三方担保 → 达成条件后结算 → 平台抽佣 → 卖家入账</li>
             <li>提现余额仅来自已结算订单净额</li>
             <li>风控冻结覆盖争议单、异常退款、高风险账户</li>
@@ -627,9 +627,9 @@
           </thead>
           <tbody>
             <tr><td>架构模式</td><td>模块化单体起步</td><td>先控复杂度，再按交易/社区/审核服务化拆分。</td></tr>
-            <tr><td>后端框架</td><td>NestJS 或 FastAPI</td><td>开源生态成熟，便于快速迭代和 API 组织。</td></tr>
+            <tr><td>后端框架</td><td>NestJS 或 FastAPI</td><td>团队 TypeScript 为主选 NestJS；团队 Python/AI 工程能力更强选 FastAPI。</td></tr>
             <tr><td>数据与缓存</td><td>PostgreSQL + Redis</td><td>交易主库 + 会话/队列/缓存。</td></tr>
-            <tr><td>搜索</td><td>OpenSearch / Elasticsearch</td><td>标签、全文、语义检索统一入口。</td></tr>
+            <tr><td>搜索</td><td>OpenSearch / Elasticsearch</td><td>标签与全文检索开箱可用；语义检索需额外启用向量检索能力与嵌入流程。</td></tr>
             <tr><td>对象存储</td><td>S3 兼容（MinIO 起步）</td><td>资产包、固件、图纸、截图统一管理。</td></tr>
             <tr><td>异步任务</td><td>BullMQ / Celery</td><td>审核扫描、支付对账、消息通知。</td></tr>
             <tr><td>安全扫描</td><td>ClamAV + 规则引擎</td><td>对代码压缩包和上传内容做自动安全检查。</td></tr>

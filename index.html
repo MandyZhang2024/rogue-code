@@ -215,6 +215,14 @@ h1{
   transition:all .18s;
 }
 .proj-footer a:hover{color:var(--fg); border-color:var(--subtle); background:rgba(255,255,255,.04)}
+/* 项目缩略图背景 */
+.proj-thumb-green{background:linear-gradient(135deg,rgba(62,207,142,.12),rgba(34,211,238,.08))}
+.proj-thumb-acc{background:linear-gradient(135deg,rgba(124,108,255,.12),rgba(167,139,250,.08))}
+.proj-thumb-pk{background:linear-gradient(135deg,rgba(244,113,181,.1),rgba(251,146,60,.07))}
+/* 编程语言颜色点 */
+.lc-c{background:#e34c26}
+.lc-python{background:#3572A5}
+.lc-qmk{background:#00B4AB}
 
 /* ── 教程列表 ── */
 .posts{display:flex; flex-direction:column; gap:2px}
@@ -293,6 +301,8 @@ footer{
 .footer-bottom a:hover{color:var(--muted)}
 
 /* ── 杂项 ── */
+.term-host{margin-left:8px;font:500 12px/1 var(--mono);color:var(--muted)}
+.section-community{padding:clamp(56px,9vw,96px) 0 0}
 @media(max-width:600px){
   .cta-section{text-align:center}
   .cta-actions{justify-content:center}
@@ -350,7 +360,7 @@ footer{
   <div class="hero-terminal">
     <div class="term-bar">
       <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-      <span style="margin-left:8px;font:500 12px/1 var(--mono);color:var(--muted)">rogue-code ~ zsh</span>
+      <span class="term-host">rogue-code ~ zsh</span>
     </div>
     <div class="term-body">
       <div><span class="t-acc">➜</span> <span class="t-green">git</span> clone rogue-code</div>
@@ -424,10 +434,10 @@ footer{
   <div class="projects">
 
     <div class="proj">
-      <div class="proj-thumb" style="background:linear-gradient(135deg,rgba(62,207,142,.12),rgba(34,211,238,.08))">🌡️</div>
+      <div class="proj-thumb proj-thumb-green">🌡️</div>
       <div class="proj-body">
         <div class="proj-meta">
-          <span class="proj-lang"><span class="lc" style="background:#e34c26"></span>C / Arduino</span>
+          <span class="proj-lang"><span class="lc lc-c"></span>C / Arduino</span>
           <span class="proj-stars">★ 42</span>
         </div>
         <div class="proj-title">ESP32 室内气象站</div>
@@ -440,10 +450,10 @@ footer{
     </div>
 
     <div class="proj">
-      <div class="proj-thumb" style="background:linear-gradient(135deg,rgba(124,108,255,.12),rgba(167,139,250,.08))">🤖</div>
+      <div class="proj-thumb proj-thumb-acc">🤖</div>
       <div class="proj-body">
         <div class="proj-meta">
-          <span class="proj-lang"><span class="lc" style="background:#3572A5"></span>Python</span>
+          <span class="proj-lang"><span class="lc lc-python"></span>Python</span>
           <span class="proj-stars">★ 87</span>
         </div>
         <div class="proj-title">本地 LLM 语音助手</div>
@@ -456,10 +466,10 @@ footer{
     </div>
 
     <div class="proj">
-      <div class="proj-thumb" style="background:linear-gradient(135deg,rgba(244,113,181,.1),rgba(251,146,60,.07))">⌨️</div>
+      <div class="proj-thumb proj-thumb-pk">⌨️</div>
       <div class="proj-body">
         <div class="proj-meta">
-          <span class="proj-lang"><span class="lc" style="background:#00B4AB"></span>C (QMK)</span>
+          <span class="proj-lang"><span class="lc lc-qmk"></span>C (QMK)</span>
           <span class="proj-stars">★ 63</span>
         </div>
         <div class="proj-title">自制分体式键盘</div>
@@ -541,7 +551,7 @@ footer{
 <div class="divider"></div>
 
 <!-- ══ 加入社区 CTA ══ -->
-<section id="community" style="padding:clamp(56px,9vw,96px) 0 0">
+<section id="community" class="section-community">
   <div class="cta-section">
     <div class="cta-text">
       <div class="cta-title">一起动手，一起搞事</div>

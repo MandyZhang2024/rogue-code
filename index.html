@@ -1,88 +1,661 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rogue-code.com · 已上线</title>
-<meta name="description" content="rogue-code.com is live.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%BE%3C/text%3E%3C/svg%3E">
-<style>
-  :root{
-    --bg:#0a0b10; --panel:#12141c; --line:#232636;
-    --fg:#e7e9f0; --muted:#8b90a6; --accent:#7c6cff; --green:#3ecf8e; --pink:#ff6b9d;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; background:
-      radial-gradient(1200px 600px at 50% -10%, rgba(124,108,255,.14), transparent 60%),
-      var(--bg);
-    color:var(--fg);
-    font:400 16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
-    display:grid; place-items:center; padding:24px;
-  }
-  .wrap{width:100%; max-width:620px}
-  .term{
-    background:var(--panel); border:1px solid var(--line); border-radius:14px;
-    box-shadow:0 24px 60px -20px rgba(0,0,0,.7); overflow:hidden;
-  }
-  .bar{
-    display:flex; align-items:center; gap:8px; padding:12px 16px;
-    border-bottom:1px solid var(--line); background:rgba(255,255,255,.02);
-  }
-  .dot{width:12px;height:12px;border-radius:50%}
-  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
-  .bar .host{margin-left:8px; color:var(--muted); font:500 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace}
-  .body{padding:32px 28px 30px}
-  .prompt{font:500 14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted); margin:0 0 18px}
-  .prompt .c{color:var(--green)} .prompt .p{color:var(--accent)}
-  h1{
-    margin:0 0 6px; font-size:clamp(30px,7vw,46px); font-weight:750; letter-spacing:-.02em;
-    background:linear-gradient(100deg,#fff, #b9b2ff 55%, var(--accent));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  h1 .wave{-webkit-text-fill-color:initial; color:initial}
-  .lead{margin:0 0 22px; color:var(--muted); font-size:15px}
-  .lead b{color:var(--fg); font-weight:600}
-  .badges{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px}
-  .badge{
-    display:inline-flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px;
-    border:1px solid var(--line); background:rgba(255,255,255,.02);
-    font:600 12.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
-  }
-  .badge .k{width:7px;height:7px;border-radius:50%}
-  .note{
-    margin:0; padding:14px 16px; border-left:2px solid var(--accent); border-radius:0 8px 8px 0;
-    background:rgba(124,108,255,.07); color:#c9ccdb; font-size:14.5px;
-  }
-  .note code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--green)}
-  .foot{margin:18px 2px 0; color:var(--muted); font-size:12.5px; text-align:center}
-  .cursor{display:inline-block;width:9px;height:1.05em;vertical-align:-2px;background:var(--green);
-    margin-left:4px;animation:blink 1.1s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-  @media (prefers-reduced-motion:reduce){.cursor{animation:none}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RogueCode Nexus · 极客资产交换站</title>
+  <meta name="description" content="RogueCode Nexus：AI 数字资产 + DIY AI 硬件交易与开源协作平台，支持现金担保交易与极客以物易物。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%BE%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg:#070a12;
+      --bg-soft:#0d1220;
+      --panel:#121a2d;
+      --line:#28324a;
+      --text:#eaf0ff;
+      --muted:#97a3c2;
+      --accent:#66d6ff;
+      --violet:#8a7dff;
+      --green:#42e0a3;
+      --pink:#ff6ca9;
+      --warning:#ffc857;
+      --max:1200px;
+      --radius:14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(1000px 600px at 80% -5%, rgba(102,214,255,0.15), transparent 65%),
+        radial-gradient(900px 500px at 10% -10%, rgba(138,125,255,0.18), transparent 65%),
+        var(--bg);
+      font: 15px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+      background: rgba(7,10,18,.8);
+      border-bottom: 1px solid rgba(40,50,74,.8);
+    }
+
+    .topbar .inner, .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar .inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .brand strong { letter-spacing: .2px; }
+    .brand span { color: var(--muted); font-size: 12px; }
+
+    .nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-size: 13px;
+    }
+
+    header.hero {
+      padding: 56px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: linear-gradient(165deg, rgba(18,26,45,.92), rgba(10,16,29,.92));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 56px -35px rgba(0,0,0,.75);
+      padding: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(34px, 5vw, 52px);
+      letter-spacing: -.03em;
+      line-height: 1.08;
+    }
+
+    .hero .subtitle {
+      margin: 0;
+      color: #d6e1ff;
+      font-weight: 500;
+      font-size: 18px;
+    }
+
+    .hero .desc {
+      margin-top: 14px;
+      color: var(--muted);
+      max-width: 65ch;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color: #bdd4ff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .hero-cta {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 650;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(100deg, var(--accent), var(--violet));
+      color: #041122;
+    }
+
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+    }
+
+    .meta-list { margin: 0; padding-left: 18px; color: var(--muted); }
+    .meta-list li + li { margin-top: 8px; }
+
+    section {
+      padding: 18px 0;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      letter-spacing: -.01em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+    }
+
+    p { margin: 0; }
+
+    .section-head {
+      margin-bottom: 14px;
+      color: var(--muted);
+    }
+
+    .grid-2, .grid-3, .grid-4 {
+      display: grid;
+      gap: 12px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(14,20,35,.86);
+      padding: 16px;
+    }
+
+    .card p { color: var(--muted); }
+    .card ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); }
+    .card li + li { margin-top: 6px; }
+
+    .kpi {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: rgba(255,255,255,.01);
+    }
+
+    .kpi strong { font-size: 17px; }
+    .kpi span { color: var(--muted); font-size: 13px; }
+
+    .pill {
+      display: inline-block;
+      font: 600 11px/1 ui-monospace, Menlo, Consolas, monospace;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      margin-bottom: 10px;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: auto;
+      background: rgba(12,18,30,.8);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid rgba(40,50,74,.8);
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #b8c5e8;
+      background: rgba(255,255,255,.02);
+    }
+
+    td { color: var(--muted); }
+    tr:last-child td { border-bottom: none; }
+
+    .callout {
+      border-left: 3px solid var(--violet);
+      background: rgba(138,125,255,.1);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 14px;
+      color: #d6dcff;
+      margin-top: 12px;
+    }
+
+    .list-tight { margin: 0; padding-left: 18px; }
+    .list-tight li { color: var(--muted); }
+    .list-tight li + li { margin-top: 4px; }
+
+    .priority {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font: 700 11px/1 ui-monospace, Menlo, Consolas, monospace;
+      border-radius: 999px;
+      padding: 5px 8px;
+      margin-right: 6px;
+      color: #091427;
+    }
+
+    .b-p0 { background: var(--green); }
+    .b-p1 { background: var(--warning); }
+    .b-p2 { background: var(--pink); }
+
+    footer {
+      padding: 20px 0 40px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .topbar .inner { align-items: flex-start; padding: 10px 0; }
+      .hero-grid, .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .hero { padding-top: 34px; }
+      .nav { justify-content: flex-start; }
+    }
+  </style>
 </head>
 <body>
-  <main class="wrap">
-    <div class="term">
-      <div class="bar">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="host">zm@rogue-code.com : ~</span>
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <strong>RogueCode Nexus｜极客资产交换站</strong>
+        <span>让代码、Agent 与自制硬件自由流通</span>
       </div>
-      <div class="body">
-        <p class="prompt"><span class="p">➜</span> <span class="c">curl</span> https://rogue-code.com</p>
-        <h1><span class="wave">👋</span> Hello, World</h1>
-        <p class="lead"><b>rogue-code.com</b> 已上线，域名与网站全部就绪。<span class="cursor"></span></p>
-        <div class="badges">
-          <span class="badge"><span class="k" style="background:var(--green)"></span>DNS 已解析</span>
-          <span class="badge"><span class="k" style="background:var(--accent)"></span>HTTPS 已加密</span>
-          <span class="badge"><span class="k" style="background:var(--pink)"></span>CDN 已加速</span>
-        </div>
-        <p class="note">这是一个占位首页 —— 服务器、域名、证书都配好了，<b>接下来就等你把真正的内容放上来</b>。<br>更新方式：把网页文件放进服务器的 <code>/var/www/rogue-code</code> 即生效。</p>
-        <p class="foot">served over TLS · Cloudflare + Vultr · 与 3pz.com 同机共存</p>
-      </div>
+      <nav class="nav">
+        <a href="#users">用户分层</a>
+        <a href="#modules">四大板块</a>
+        <a href="#trade">双交易体系</a>
+        <a href="#governance">审核与权限</a>
+        <a href="#community">社区</a>
+        <a href="#payment">支付与资金</a>
+        <a href="#risk">风控合规</a>
+        <a href="#ux">UI/UX</a>
+        <a href="#tech">技术架构</a>
+      </nav>
     </div>
+  </div>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <section class="panel">
+        <h1>RogueCode Nexus</h1>
+        <p class="subtitle">全球极客的 AI 数字资产 × DIY AI 硬件双向流通平台</p>
+        <p class="desc">平台聚焦开发者、硬件 DIY 玩家、Agent 创作者、开源爱好者，支持现金担保交易与无现金以物易物并行，形成“可交易 + 可开源 + 可置换”的垂直闭环。</p>
+        <div class="chips">
+          <span class="chip">技能交易</span>
+          <span class="chip">AI 软件/Agent 交易</span>
+          <span class="chip">开源免费代码区</span>
+          <span class="chip">DIY AI 硬件交易</span>
+          <span class="chip">现金担保支付</span>
+          <span class="chip">极客以物易物</span>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#modules">查看四大核心板块</a>
+          <a class="btn btn-ghost" href="#roadmap">查看落地优先级</a>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <span class="pill">定位摘要</span>
+        <ul class="meta-list">
+          <li>区别于传统电商：以技术资产和 DIY 硬件为中心，而非通用品零售。</li>
+          <li>交易模式双轨并行：现金担保订单 + 无现金置换，满足极客多样交换场景。</li>
+          <li>强审机制覆盖侵权、恶意脚本、违规硬件与工业量产倒卖风险。</li>
+          <li>社区与交易打通：作品展示、教程专栏、开源协作、接单互助共生。</li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="users">
+      <h2>1) 目标用户分层画像</h2>
+      <p class="section-head">按角色定义发布能力、主页橱窗、可参与交易形态与社区行为。</p>
+      <div class="grid-4">
+        <article class="card">
+          <h3>普通极客（Explorer）</h3>
+          <p>找可复用工具、购买小型脚本、参与以物易物。</p>
+          <ul>
+            <li>浏览开源区与交易市场</li>
+            <li>轻量购买和评论互动</li>
+            <li>参与问答与互助板块</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>硬件 DIY 创作者（Maker）</h3>
+          <p>出售自制设备、换取软件能力、展示改造过程。</p>
+          <ul>
+            <li>发布硬件实物和教程专栏</li>
+            <li>发起硬件置换需求</li>
+            <li>维护制作流程与BOM展示</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Agent 开发者（Agent Builder）</h3>
+          <p>销售 Agent/自动化流程/权重包，承接定制开发。</p>
+          <ul>
+            <li>发布数字资产与技能服务</li>
+            <li>维护版本和更新日志</li>
+            <li>提供在线 Demo 预览</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>开源贡献者（Open Source Contributor）</h3>
+          <p>发布开源项目、吸引协作者、积累技术声誉。</p>
+          <ul>
+            <li>同步仓库与声明协议</li>
+            <li>支持 Fork 和二次修改</li>
+            <li>维护讨论区和贡献者榜</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="modules">
+      <h2>2) 四大核心业务板块</h2>
+      <p class="section-head">明确“交易能力 + 审核要求 + 交付逻辑”，避免走向通用电商模板。</p>
+      <div class="grid-2">
+        <article class="card">
+          <span class="pill">A. 核心交易</span>
+          <h3>技能交易板块</h3>
+          <ul class="list-tight">
+            <li>服务类型：单次服务 / 包时服务 / 定制项目</li>
+            <li>技能范围：微调、Agent 定制、爬虫、固件、LLM 应用、前后端、提示词工程、AR 程序等</li>
+            <li>流程：需求澄清 → 里程碑交付 → 验收 → 售后申诉</li>
+            <li>定价：固定价 / 阶梯套餐 / 报价单</li>
+            <li>交付：平台文件 + 仓库交付记录；技术维度评分</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="pill">B. 核心交易</span>
+          <h3>AI 软件 / Agent 交易板块</h3>
+          <ul class="list-tight">
+            <li>资产类型：私有 Agent、脚本、本地 AI 工具、权重、RAG 系统、工作流等</li>
+            <li>强制授权类型：开源免费 / 单次授权 / 商用永久授权 / 源码买断</li>
+            <li>功能：版本管理、更新日志、License 展示、兼容环境声明、在线预览</li>
+            <li>交付：部署包 / 源码包 / API 接入说明 / 模型依赖说明</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="pill">C. 免费开源</span>
+          <h3>开源免费代码区</h3>
+          <ul class="list-tight">
+            <li>零交易零抽成，仅做共享与协作</li>
+            <li>支持：代码、固件、Agent 工程、硬件图纸</li>
+            <li>强制字段：MIT/GPL/Apache 协议、运行说明、禁止付费捆绑声明</li>
+            <li>功能：Fork 镜像、版本记录、贡献者榜、Issue 讨论、二创展示墙</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <span class="pill">D. 核心交易</span>
+          <h3>DIY AI 硬件交易板块</h3>
+          <ul class="list-tight">
+            <li>仅允许个人 DIY/手工改造硬件，工业量产禁售</li>
+            <li>品类：ESP32 设备、AR 眼镜、离线 AI 终端、嵌入式视觉设备、DIY 机器人等</li>
+            <li>上架必备：焊接图纸、固件说明、实拍图、制作教程</li>
+            <li>支持实物物流和固件下载，附售后硬件问答</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="trade">
+      <h2>3) 双交易体系完整规则</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>模式</th>
+              <th>规则</th>
+              <th>结算与平台收益</th>
+              <th>交付机制</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>现金第三方支付交易</strong></td>
+              <td>接入支付宝 / 微信支付 / Stripe；下单担保、自动确认、售后申诉。</td>
+              <td>平台抽固定服务费；资金走第三方担保，平台不直触用户资金。</td>
+              <td>数字资产 T+3 自动确认；技能服务 T+5；硬件签收后 T+3。</td>
+            </tr>
+            <tr>
+              <td><strong>极客以物易物（无现金）</strong></td>
+              <td>支持跨品类置换：硬件↔Agent、技能↔硬件、代码↔设备。</td>
+              <td>无资金流水，无抽成，仅留仲裁记录与信用评分。</td>
+              <td>实物邮寄（物流单+签收）或数字直传（哈希+下载记录）。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">置换流程：提案匹配 → 双向确认 → 平台托管交付凭证 → 完成交付 → 双方互评。</div>
+    </section>
+
+    <section id="governance">
+      <h2>4) 用户权限、发布审核、资产分类体系</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>身份权限层</h3>
+          <ul class="list-tight">
+            <li>普通极客：浏览、购买、发帖、基础发布</li>
+            <li>硬件 DIY 创作者：可发布硬件、教程、硬件问答</li>
+            <li>Agent 开发者：可发布 Agent/软件及技能服务</li>
+            <li>开源贡献者：可发布开源项目与协作空间</li>
+            <li>各身份绑定个人主页作品橱窗模板</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>上架审核机制（基础强审）</h3>
+          <ul class="list-tight">
+            <li>机器初审：敏感词、恶意脚本、侵权模型指纹、重复搬运检测</li>
+            <li>人工复审：硬件真实性、素材完整性、授权合法性</li>
+            <li>风险分级：通过 / 补充材料 / 拒绝 / 限流观察</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>资产分类标准</h3>
+          <ul class="list-tight">
+            <li>交易属性：免费开源 / 现金售卖 / 可置换</li>
+            <li>交付形态：源码 / 部署包 / 技能服务 / 实体硬件</li>
+            <li>授权属性：个人用 / 商业用 / 买断 / 开源协议</li>
+            <li>技术标签：LLM、RAG、ESP32、嵌入式、AR、机器人、自动化</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="community">
+      <h2>5) 社区配套功能（极客交流 + 协作）</h2>
+      <div class="grid-4">
+        <div class="kpi"><strong>作品演示页</strong><span>Demo Showcase，支持可视化演示和参数说明。</span></div>
+        <div class="kpi"><strong>DIY 教程专栏</strong><span>图文步骤 + BOM + 风险提示。</span></div>
+        <div class="kpi"><strong>Agent 在线预览</strong><span>受限沙箱调用，控制资源与权限。</span></div>
+        <div class="kpi"><strong>代码在线预览</strong><span>只读结构树 + 关键文件预览。</span></div>
+        <div class="kpi"><strong>开源项目讨论区</strong><span>Issue 风格线程化协作。</span></div>
+        <div class="kpi"><strong>硬件改造问答</strong><span>问题悬赏、经验互助、工具清单。</span></div>
+        <div class="kpi"><strong>极客互助接单区</strong><span>需求池发布、快速认领、信用沉淀。</span></div>
+        <div class="kpi"><strong>个人声誉系统</strong><span>贡献值 + 交易信用 + 教程热度 + 协作指数。</span></div>
+      </div>
+    </section>
+
+    <section id="payment">
+      <h2>6) 支付接入、资金流转、提现逻辑</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>支付与结算链路</h3>
+          <ul class="list-tight">
+            <li>统一支付网关：AliPay / WeChat / Stripe Adapter</li>
+            <li>资金链路：买家付款至第三方担保 → 达成条件后结算 → 平台抽佣 → 卖家入账</li>
+            <li>提现余额仅来自已结算订单净额</li>
+            <li>风控冻结覆盖争议单、异常退款、高风险账户</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>提现与对账规则</h3>
+          <ul class="list-tight">
+            <li>提现周期：T+1 / T+3 可配置</li>
+            <li>提现失败回退：原路退回平台余额并消息通知</li>
+            <li>支付回调自动对账 + 每日结算报表</li>
+            <li>异常补单任务由异步队列重试并告警</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="risk">
+      <h2>7) 风控、版权、硬件合规、AI 代码安全</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>版权与授权治理</h3>
+          <ul class="list-tight">
+            <li>强制授权来源与 License 声明</li>
+            <li>AI 模型/数据集来源与使用范围披露</li>
+            <li>侵权投诉流程：通知 → 举证 → 裁定 → 下架/恢复</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>代码与硬件安全</h3>
+          <ul class="list-tight">
+            <li>上架包自动扫描：木马、后门、恶意下载器、敏感权限调用</li>
+            <li>高危资产必须提交最小权限运行建议</li>
+            <li>硬件强制 DIY 自制声明，禁止工业量产倒卖</li>
+            <li>电池/射频/激光等高风险项强提示与免责确认</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout">交易风控重点：刷单、洗稿、重复上架、欺诈置换；新账号限额，高风险延迟放款并触发人工复核。</div>
+    </section>
+
+    <section id="ux">
+      <h2>8) 前端风格、页面结构、核心页面原型文案</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>UI/UX 极客风格</h3>
+          <ul class="list-tight">
+            <li>暗色基底 + 终端感 + 霓虹点缀</li>
+            <li>高信息密度，标签驱动检索，低冗余操作</li>
+            <li>卡片 + 参数面板 + 技术标签云 + 状态徽章</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>核心页面结构</h3>
+          <ul class="list-tight">
+            <li>首页：四大板块入口 + 今日新品 + 热门开源 + 今日置换</li>
+            <li>交易市场：技能 / Agent / 硬件切换 + 多维筛选</li>
+            <li>置换广场：需求流、智能匹配、状态追踪</li>
+            <li>开源社区：项目流、Fork 热榜、讨论热点</li>
+            <li>个人工作台：发布、订单、置换、版本、信誉</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>原型文案（示例）</h3>
+          <ul class="list-tight">
+            <li>首页 Banner：「发布你的 Agent、交换你的硬件、构建你的极客声誉」</li>
+            <li>详情按钮：「立即购买」「发起置换」「在线预览」「查看源码协议」</li>
+            <li>发布提示：「请上传固件说明与实拍制作过程，工业量产品将被拒绝」</li>
+            <li>置换流程页：「双方确认后进入托管交付，完成后自动开放互评」</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="tech">
+      <h2>9) 后端基础技术架构选型建议（开源友好）</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>层级</th>
+              <th>建议</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>架构模式</td><td>模块化单体起步</td><td>先控复杂度，再按交易/社区/审核服务化拆分。</td></tr>
+            <tr><td>后端框架</td><td>NestJS 或 FastAPI</td><td>开源生态成熟，便于快速迭代和 API 组织。</td></tr>
+            <tr><td>数据与缓存</td><td>PostgreSQL + Redis</td><td>交易主库 + 会话/队列/缓存。</td></tr>
+            <tr><td>搜索</td><td>OpenSearch / Elasticsearch</td><td>标签、全文、语义检索统一入口。</td></tr>
+            <tr><td>对象存储</td><td>S3 兼容（MinIO 起步）</td><td>资产包、固件、图纸、截图统一管理。</td></tr>
+            <tr><td>异步任务</td><td>BullMQ / Celery</td><td>审核扫描、支付对账、消息通知。</td></tr>
+            <tr><td>安全扫描</td><td>ClamAV + 规则引擎</td><td>对代码压缩包和上传内容做自动安全检查。</td></tr>
+            <tr><td>支付网关</td><td>Provider Adapter + Webhook 总线</td><td>支持多支付通道统一接入与回调处理。</td></tr>
+            <tr><td>权限</td><td>RBAC + 资产级 ACL</td><td>身份、类目、风险等级联合控制。</td></tr>
+            <tr><td>可观测性</td><td>Prometheus + Grafana + OTel</td><td>交易链路与审核链路可追踪。</td></tr>
+            <tr><td>部署</td><td>Docker + Kubernetes（可选）+ Terraform</td><td>开源优先，兼顾云上扩展。</td></tr>
+            <tr><td>协作接口</td><td>GitHub/GitLab OAuth</td><td>仓库元数据同步，增强开源协作体验。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <h2>10) 落地优先级（Roadmap）</h2>
+      <div class="priority">
+        <div class="card"><span class="badge b-p0">P0</span> 四大板块发布/浏览、现金交易闭环、以物易物闭环、基础审核、身份体系、评价系统。</div>
+        <div class="card"><span class="badge b-p1">P1</span> 在线预览、教程专栏、开源协作讨论、高级搜索与推荐。</div>
+        <div class="card"><span class="badge b-p2">P2</span> 信誉模型进阶、跨境税务辅助、智能定价建议、国际化多语言。</div>
+      </div>
+      <div class="callout">最终形态：平台形成“可交易（技能/Agent/硬件） + 可开源（免费协作） + 可置换（去现金交换）”的三位一体闭环，突出极客与 DIY AI 圈层差异化价值。</div>
+    </section>
   </main>
+
+  <footer>
+    RogueCode Nexus · 面向全球极客社区的 AI 资产与 DIY 硬件交易协作网络
+  </footer>
 </body>
 </html>

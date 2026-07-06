@@ -3,86 +3,607 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rogue-code.com · 已上线</title>
-<meta name="description" content="rogue-code.com is live.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%BE%3C/text%3E%3C/svg%3E">
+<title>rogue-code · 极客 DIY 社区</title>
+<meta name="description" content="rogue-code.com —— 极客 DIY 社区。分享硬件项目、开源代码与动手改造经验，一起构建属于自己的世界。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 <style>
-  :root{
-    --bg:#0a0b10; --panel:#12141c; --line:#232636;
-    --fg:#e7e9f0; --muted:#8b90a6; --accent:#7c6cff; --green:#3ecf8e; --pink:#ff6b9d;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; background:
-      radial-gradient(1200px 600px at 50% -10%, rgba(124,108,255,.14), transparent 60%),
-      var(--bg);
-    color:var(--fg);
-    font:400 16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
-    display:grid; place-items:center; padding:24px;
-  }
-  .wrap{width:100%; max-width:620px}
-  .term{
-    background:var(--panel); border:1px solid var(--line); border-radius:14px;
-    box-shadow:0 24px 60px -20px rgba(0,0,0,.7); overflow:hidden;
-  }
-  .bar{
-    display:flex; align-items:center; gap:8px; padding:12px 16px;
-    border-bottom:1px solid var(--line); background:rgba(255,255,255,.02);
-  }
-  .dot{width:12px;height:12px;border-radius:50%}
-  .dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
-  .bar .host{margin-left:8px; color:var(--muted); font:500 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace}
-  .body{padding:32px 28px 30px}
-  .prompt{font:500 14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted); margin:0 0 18px}
-  .prompt .c{color:var(--green)} .prompt .p{color:var(--accent)}
-  h1{
-    margin:0 0 6px; font-size:clamp(30px,7vw,46px); font-weight:750; letter-spacing:-.02em;
-    background:linear-gradient(100deg,#fff, #b9b2ff 55%, var(--accent));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  h1 .wave{-webkit-text-fill-color:initial; color:initial}
-  .lead{margin:0 0 22px; color:var(--muted); font-size:15px}
-  .lead b{color:var(--fg); font-weight:600}
-  .badges{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 26px}
-  .badge{
-    display:inline-flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px;
-    border:1px solid var(--line); background:rgba(255,255,255,.02);
-    font:600 12.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
-  }
-  .badge .k{width:7px;height:7px;border-radius:50%}
-  .note{
-    margin:0; padding:14px 16px; border-left:2px solid var(--accent); border-radius:0 8px 8px 0;
-    background:rgba(124,108,255,.07); color:#c9ccdb; font-size:14.5px;
-  }
-  .note code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--green)}
-  .foot{margin:18px 2px 0; color:var(--muted); font-size:12.5px; text-align:center}
-  .cursor{display:inline-block;width:9px;height:1.05em;vertical-align:-2px;background:var(--green);
-    margin-left:4px;animation:blink 1.1s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-  @media (prefers-reduced-motion:reduce){.cursor{animation:none}}
+/* ── 全局变量 ── */
+:root{
+  --bg:#080910; --surface:#0f1118; --panel:#14161f; --line:#1e2130;
+  --fg:#e8eaf2; --muted:#7a7f96; --subtle:#4a4f66;
+  --accent:#7c6cff; --accent2:#a78bfa;
+  --green:#3ecf8e; --pink:#f471b5; --cyan:#22d3ee; --orange:#fb923c;
+  --r:14px;
+  --mono: ui-monospace,SFMono-Regular,Menlo,"Cascadia Code","Fira Code",monospace;
+  --sans: ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--fg);
+  font:400 16px/1.65 var(--sans); min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 60% -5%,  rgba(124,108,255,.13), transparent 70%),
+    radial-gradient(ellipse 600px 400px at -5% 60%,  rgba(62,207,142,.07),  transparent 60%),
+    radial-gradient(ellipse 500px 400px at 105% 80%, rgba(244,113,181,.07), transparent 60%);
+}
+a{color:inherit;text-decoration:none}
+
+/* ── 导航 ── */
+nav{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(20px,5vw,60px);
+  height:60px;
+  background:rgba(8,9,16,.8);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{
+  display:flex; align-items:center; gap:10px;
+  font:700 17px/1 var(--mono); color:var(--fg);
+  letter-spacing:-.01em;
+}
+.nav-logo .slash{color:var(--accent)}
+.nav-links{display:flex; align-items:center; gap:6px}
+.nav-links a{
+  padding:6px 13px; border-radius:8px;
+  font:500 14px/1 var(--sans); color:var(--muted);
+  transition:color .18s, background .18s;
+}
+.nav-links a:hover{color:var(--fg); background:rgba(255,255,255,.05)}
+.nav-cta{
+  padding:7px 16px !important; border-radius:8px !important;
+  background:var(--accent) !important; color:#fff !important;
+  font-weight:600 !important;
+  transition:opacity .18s !important;
+}
+.nav-cta:hover{opacity:.85 !important; background:var(--accent) !important}
+.nav-mobile-btn{
+  display:none; background:none; border:none; cursor:pointer;
+  color:var(--muted); padding:4px;
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .nav-mobile-btn{display:flex; align-items:center}
+}
+
+/* ── Hero ── */
+.hero{
+  padding: clamp(72px,12vw,130px) clamp(20px,5vw,60px) clamp(60px,10vw,110px);
+  display:grid; grid-template-columns:1fr auto;
+  gap:40px; align-items:center; max-width:1100px; margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:5px 13px; border-radius:999px;
+  border:1px solid rgba(124,108,255,.35); background:rgba(124,108,255,.1);
+  font:600 12.5px/1 var(--mono); color:var(--accent2);
+  margin-bottom:20px;
+}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);
+  animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{
+  font-size:clamp(36px,7vw,68px); font-weight:800; letter-spacing:-.03em; line-height:1.08;
+  background:linear-gradient(110deg,#fff 20%, var(--accent2) 55%, var(--accent) 80%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  margin-bottom:20px;
+}
+.hero-sub{
+  font-size:clamp(15px,2vw,18px); color:var(--muted); max-width:520px; line-height:1.7;
+  margin-bottom:36px;
+}
+.hero-sub b{color:var(--fg)}
+.hero-actions{display:flex; flex-wrap:wrap; gap:12px}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 24px; border-radius:10px; border:none; cursor:pointer;
+  font:600 15px/1 var(--sans); transition:all .18s;
+}
+.btn-primary{background:var(--accent); color:#fff}
+.btn-primary:hover{background:var(--accent2); transform:translateY(-1px); box-shadow:0 8px 24px -8px rgba(124,108,255,.5)}
+.btn-ghost{background:transparent; color:var(--fg); border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(255,255,255,.05); border-color:var(--subtle)}
+.hero-terminal{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+  box-shadow:0 24px 60px -20px rgba(0,0,0,.6); overflow:hidden;
+  width:clamp(260px,32vw,340px); flex-shrink:0;
+  font:13px/1.7 var(--mono);
+}
+.term-bar{
+  display:flex; align-items:center; gap:7px; padding:10px 14px;
+  border-bottom:1px solid var(--line); background:rgba(255,255,255,.02);
+}
+.dot{width:11px;height:11px;border-radius:50%}
+.dot.r{background:#ff5f57}.dot.y{background:#febc2e}.dot.g{background:#28c840}
+.term-body{padding:16px 18px; color:#c9ccdb}
+.term-body .t-dim{color:var(--subtle)}
+.term-body .t-green{color:var(--green)}
+.term-body .t-acc{color:var(--accent2)}
+.term-body .t-pk{color:var(--pink)}
+.term-body .t-cy{color:var(--cyan)}
+.term-caret{display:inline-block;width:8px;height:1em;vertical-align:-1px;
+  background:var(--green);animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.term-caret,.hero-badge .dot{animation:none}}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr; text-align:left}
+  .hero-terminal{display:none}
+}
+
+/* ── 分隔线 ── */
+.divider{height:1px; background:var(--line); margin:0 clamp(20px,5vw,60px)}
+
+/* ── 特性卡片 ── */
+.section{padding:clamp(56px,9vw,96px) clamp(20px,5vw,60px); max-width:1100px; margin:0 auto}
+.section-label{
+  font:700 11.5px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:12px;
+}
+.section-title{
+  font-size:clamp(24px,4vw,38px); font-weight:800; letter-spacing:-.025em;
+  color:var(--fg); margin-bottom:12px;
+}
+.section-sub{font-size:15.5px; color:var(--muted); max-width:520px; line-height:1.7; margin-bottom:44px}
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+  padding:28px 26px; transition:border-color .2s, transform .2s;
+  position:relative; overflow:hidden;
+}
+.card::before{
+  content:''; position:absolute; inset:0; opacity:0; transition:opacity .25s;
+  background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(124,108,255,.08), transparent 60%);
+  pointer-events:none;
+}
+.card:hover{border-color:rgba(124,108,255,.4); transform:translateY(-3px)}
+.card:hover::before{opacity:1}
+.card-icon{font-size:28px; margin-bottom:14px; line-height:1}
+.card-title{font:700 17px/1.3 var(--sans); color:var(--fg); margin-bottom:8px}
+.card-desc{font-size:14.5px; color:var(--muted); line-height:1.65}
+.card-tag{
+  display:inline-block; margin-top:14px; padding:3px 9px; border-radius:6px;
+  font:600 11.5px/1.5 var(--mono);
+}
+.tag-green{background:rgba(62,207,142,.12); color:var(--green)}
+.tag-acc{background:rgba(124,108,255,.12); color:var(--accent2)}
+.tag-pk{background:rgba(244,113,181,.12); color:var(--pink)}
+.tag-cy{background:rgba(34,211,238,.12); color:var(--cyan)}
+.tag-or{background:rgba(251,146,60,.12); color:var(--orange)}
+
+/* ── 项目展示 ── */
+.projects{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px}
+.proj{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+  overflow:hidden; transition:border-color .2s, transform .2s;
+}
+.proj:hover{border-color:rgba(124,108,255,.4); transform:translateY(-3px)}
+.proj-thumb{
+  height:160px; display:flex; align-items:center; justify-content:center;
+  font-size:56px; border-bottom:1px solid var(--line);
+}
+.proj-body{padding:20px 22px}
+.proj-meta{
+  display:flex; align-items:center; gap:8px; margin-bottom:8px;
+  font:600 11.5px/1 var(--mono);
+}
+.proj-lang{display:flex; align-items:center; gap:5px; color:var(--muted)}
+.proj-lang .lc{width:10px;height:10px;border-radius:50%}
+.proj-stars{color:var(--muted)}
+.proj-title{font:700 16px/1.3 var(--sans); color:var(--fg); margin-bottom:7px}
+.proj-desc{font-size:13.5px; color:var(--muted); line-height:1.6}
+.proj-footer{
+  padding:12px 22px; border-top:1px solid var(--line);
+  display:flex; gap:10px; font:600 12px/1 var(--mono);
+}
+.proj-footer a{
+  color:var(--muted); padding:5px 10px; border-radius:6px; border:1px solid var(--line);
+  transition:all .18s;
+}
+.proj-footer a:hover{color:var(--fg); border-color:var(--subtle); background:rgba(255,255,255,.04)}
+
+/* ── 教程列表 ── */
+.posts{display:flex; flex-direction:column; gap:2px}
+.post{
+  display:flex; gap:18px; align-items:flex-start;
+  padding:20px 22px; border-radius:var(--r);
+  border:1px solid transparent;
+  transition:background .18s, border-color .18s;
+}
+.post:hover{background:var(--panel); border-color:var(--line)}
+.post-icon{
+  flex-shrink:0; width:44px; height:44px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; background:var(--surface); border:1px solid var(--line);
+}
+.post-content{flex:1; min-width:0}
+.post-title{font:600 15.5px/1.35 var(--sans); color:var(--fg); margin-bottom:5px}
+.post-desc{font-size:13.5px; color:var(--muted); line-height:1.6; margin-bottom:8px}
+.post-meta{display:flex; flex-wrap:wrap; gap:8px; font:500 12px/1 var(--mono); color:var(--subtle)}
+.post-tag{
+  padding:2px 8px; border-radius:5px;
+  font:600 11px/1.5 var(--mono);
+}
+
+/* ── 社区 CTA ── */
+.cta-section{
+  margin:0 clamp(20px,5vw,60px) clamp(56px,9vw,96px);
+  background:linear-gradient(135deg, rgba(124,108,255,.12) 0%, rgba(62,207,142,.07) 100%);
+  border:1px solid rgba(124,108,255,.25); border-radius:20px;
+  padding:clamp(40px,7vw,72px) clamp(28px,5vw,60px);
+  display:flex; flex-wrap:wrap; gap:32px;
+  align-items:center; justify-content:space-between;
+}
+.cta-text .cta-title{
+  font-size:clamp(22px,4vw,34px); font-weight:800; letter-spacing:-.025em;
+  color:var(--fg); margin-bottom:10px;
+}
+.cta-text .cta-sub{font-size:15px; color:var(--muted); max-width:460px; line-height:1.7}
+.cta-actions{display:flex; flex-wrap:wrap; gap:12px}
+.stat-row{
+  display:flex; flex-wrap:wrap; gap:24px; margin-top:clamp(28px,4vw,44px);
+  padding-top:clamp(22px,3vw,34px); border-top:1px solid var(--line); width:100%;
+}
+.stat{text-align:center; flex:1; min-width:100px}
+.stat-num{
+  font:800 clamp(26px,4vw,38px)/1 var(--sans); letter-spacing:-.03em;
+  background:linear-gradient(135deg,var(--fg),var(--accent2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.stat-label{font-size:13px; color:var(--muted); margin-top:4px}
+
+/* ── 页脚 ── */
+footer{
+  background:var(--surface); border-top:1px solid var(--line);
+  padding:clamp(32px,5vw,52px) clamp(20px,5vw,60px);
+}
+.footer-inner{
+  max-width:1100px; margin:0 auto;
+  display:flex; flex-wrap:wrap; gap:32px 48px;
+  justify-content:space-between; align-items:flex-start;
+}
+.footer-brand .brand-name{font:700 17px/1 var(--mono); color:var(--fg); margin-bottom:8px}
+.footer-brand .brand-name .slash{color:var(--accent)}
+.footer-brand p{font-size:13.5px; color:var(--muted); max-width:240px; line-height:1.65}
+.footer-links h4{font:700 12px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--subtle); margin-bottom:14px}
+.footer-links ul{list-style:none}
+.footer-links li{margin-bottom:9px}
+.footer-links a{font-size:14px; color:var(--muted); transition:color .15s}
+.footer-links a:hover{color:var(--fg)}
+.footer-bottom{
+  max-width:1100px; margin:28px auto 0; padding-top:20px; border-top:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; align-items:center;
+  font-size:13px; color:var(--subtle);
+}
+.footer-bottom a{color:var(--subtle); transition:color .15s}
+.footer-bottom a:hover{color:var(--muted)}
+
+/* ── 杂项 ── */
+@media(max-width:600px){
+  .cta-section{text-align:center}
+  .cta-actions{justify-content:center}
+  .stat-row{justify-content:center}
+}
 </style>
 </head>
 <body>
-  <main class="wrap">
-    <div class="term">
-      <div class="bar">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="host">zm@rogue-code.com : ~</span>
-      </div>
-      <div class="body">
-        <p class="prompt"><span class="p">➜</span> <span class="c">curl</span> https://rogue-code.com</p>
-        <h1><span class="wave">👋</span> Hello, World</h1>
-        <p class="lead"><b>rogue-code.com</b> 已上线，域名与网站全部就绪。<span class="cursor"></span></p>
-        <div class="badges">
-          <span class="badge"><span class="k" style="background:var(--green)"></span>DNS 已解析</span>
-          <span class="badge"><span class="k" style="background:var(--accent)"></span>HTTPS 已加密</span>
-          <span class="badge"><span class="k" style="background:var(--pink)"></span>CDN 已加速</span>
+
+<!-- ══ 导航 ══ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="slash">//</span>rogue-code
+  </a>
+  <div class="nav-links">
+    <a href="#projects">项目</a>
+    <a href="#tutorials">教程</a>
+    <a href="#community">社区</a>
+    <a href="#about">关于</a>
+    <a class="nav-cta" href="#community">加入社区</a>
+  </div>
+  <button class="nav-mobile-btn" aria-label="菜单" onclick="this.nextElementSibling&&this.nextElementSibling.style">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="19" y2="6"/><line x1="3" y1="11" x2="19" y2="11"/><line x1="3" y1="16" x2="19" y2="16"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- ══ Hero ══ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">
+      <span class="dot"></span>社区已开放 · 持续更新中
+    </div>
+    <h1>动手构建<br>重塑世界</h1>
+    <p class="hero-sub">
+      <b>rogue-code</b> 是一个极客 DIY 社区——硬件改造、开源软件、嵌入式折腾、脑洞项目……
+      这里没有上限，只有动手的欲望和分享的热情。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#projects">🔍 探索项目</a>
+      <a class="btn btn-ghost" href="#tutorials">📖 查看教程</a>
+    </div>
+  </div>
+
+  <div class="hero-terminal">
+    <div class="term-bar">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span style="margin-left:8px;font:500 12px/1 var(--mono);color:var(--muted)">rogue-code ~ zsh</span>
+    </div>
+    <div class="term-body">
+      <div><span class="t-acc">➜</span> <span class="t-green">git</span> clone rogue-code</div>
+      <div class="t-dim">正在克隆到 'diy-universe'...</div>
+      <div class="t-dim">remote: 对象: 1337</div>
+      <div><span class="t-green">✔</span> 接收完毕&nbsp;<span class="t-pk">100%</span></div>
+      <br>
+      <div><span class="t-acc">➜</span> <span class="t-green">ls</span> projects/</div>
+      <div><span class="t-cy">hardware/</span>&nbsp;&nbsp;<span class="t-green">firmware/</span></div>
+      <div><span class="t-pk">ai-toys/</span>&nbsp;&nbsp;&nbsp;<span class="t-acc">scripts/</span></div>
+      <br>
+      <div><span class="t-acc">➜</span> <span class="t-green">make</span> something-cool<span class="term-caret"></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 核心特性 ══ -->
+<section class="section" id="about">
+  <div class="section-label">为什么是 rogue-code</div>
+  <div class="section-title">极客精神，从动手开始</div>
+  <p class="section-sub">不只是看教程——我们鼓励你打开电路板、写烂第一行代码、然后把它变成让朋友惊叹的东西。</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🔧</div>
+      <div class="card-title">DIY 硬件项目</div>
+      <div class="card-desc">树莓派、ESP32、Arduino——从零搭建能跑的东西。改造、拆解、重新组装，硬件自由是基本权利。</div>
+      <span class="card-tag tag-green">Hardware</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">💻</div>
+      <div class="card-title">开源代码分享</div>
+      <div class="card-desc">脚本、工具、小应用——代码都在 GitHub 上。读、改、用、贡献，开源文化就该是这样。</div>
+      <span class="card-tag tag-acc">Open Source</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">嵌入式 & 固件</div>
+      <div class="card-desc">RTOS、裸机编程、自定义固件。给设备刷入自己的灵魂，让它做你想让它做的事。</div>
+      <span class="card-tag tag-cy">Embedded</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">AI 玩具 & 实验</div>
+      <div class="card-desc">本地大模型、边缘推理、语音控制——把最新的 AI 技术跑在你自己的硬件上。</div>
+      <span class="card-tag tag-pk">AI / ML</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛠️</div>
+      <div class="card-title">工具链 & 环境</div>
+      <div class="card-desc">Nix、dotfiles、自制 CLI、开发容器……把开发环境调教成最顺手的样子。</div>
+      <span class="card-tag tag-or">DevTools</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤝</div>
+      <div class="card-title">社区 & 协作</div>
+      <div class="card-desc">技术问题、方案讨论、组队做项目——这里有一群真的在动手的人，欢迎进来。</div>
+      <span class="card-tag tag-green">Community</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 精选项目 ══ -->
+<section class="section" id="projects">
+  <div class="section-label">精选项目</div>
+  <div class="section-title">社区在做什么</div>
+  <p class="section-sub">从传感器到语言模型，从三行脚本到完整系统——看看大家在折腾什么。</p>
+  <div class="projects">
+
+    <div class="proj">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,rgba(62,207,142,.12),rgba(34,211,238,.08))">🌡️</div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-lang"><span class="lc" style="background:#e34c26"></span>C / Arduino</span>
+          <span class="proj-stars">★ 42</span>
         </div>
-        <p class="note">这是一个占位首页 —— 服务器、域名、证书都配好了，<b>接下来就等你把真正的内容放上来</b>。<br>更新方式：把网页文件放进服务器的 <code>/var/www/rogue-code</code> 即生效。</p>
-        <p class="foot">served over TLS · Cloudflare + Vultr · 与 3pz.com 同机共存</p>
+        <div class="proj-title">ESP32 室内气象站</div>
+        <div class="proj-desc">低功耗气象监测节点，温湿度 + PM2.5，数据推 MQTT，ESPHome 直接接 Home Assistant。</div>
+      </div>
+      <div class="proj-footer">
+        <a href="#">📦 查看代码</a>
+        <a href="#">📖 教程</a>
       </div>
     </div>
-  </main>
+
+    <div class="proj">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,rgba(124,108,255,.12),rgba(167,139,250,.08))">🤖</div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-lang"><span class="lc" style="background:#3572A5"></span>Python</span>
+          <span class="proj-stars">★ 87</span>
+        </div>
+        <div class="proj-title">本地 LLM 语音助手</div>
+        <div class="proj-desc">树莓派 5 上跑 llama.cpp，配合 Whisper 语音识别，离线回答问题，无需联网。</div>
+      </div>
+      <div class="proj-footer">
+        <a href="#">📦 查看代码</a>
+        <a href="#">📖 教程</a>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-thumb" style="background:linear-gradient(135deg,rgba(244,113,181,.1),rgba(251,146,60,.07))">⌨️</div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-lang"><span class="lc" style="background:#00B4AB"></span>C (QMK)</span>
+          <span class="proj-stars">★ 63</span>
+        </div>
+        <div class="proj-title">自制分体式键盘</div>
+        <div class="proj-desc">从 PCB 设计到焊接到固件，全自制 40% 分体式键盘，QMK 配置开源，附采购清单。</div>
+      </div>
+      <div class="proj-footer">
+        <a href="#">📦 查看代码</a>
+        <a href="#">📖 教程</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 最新教程 ══ -->
+<section class="section" id="tutorials">
+  <div class="section-label">最新教程</div>
+  <div class="section-title">从零到能跑</div>
+  <p class="section-sub">手把手带你完成——每篇教程都附源代码，跟着做就能出活。</p>
+  <div class="posts">
+
+    <div class="post">
+      <div class="post-icon">🔌</div>
+      <div class="post-content">
+        <div class="post-title">用 ESP-IDF 从裸机写一个 HTTP 服务器</div>
+        <div class="post-desc">不用框架，不靠库——直接操作 lwIP 栈，理解 TCP 连接的本质，顺带搞懂 FreeRTOS 任务。</div>
+        <div class="post-meta">
+          <span class="post-tag tag-cy">嵌入式</span>
+          <span>· 阅读约 18 min</span>
+          <span>· ESP32 / C</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-icon">🐧</div>
+      <div class="post-content">
+        <div class="post-title">NixOS 从入门到飞起：可复现开发环境完全指南</div>
+        <div class="post-desc">配置即代码，环境即版本。手把手带你把整台机器的状态装进一个 Git 仓库。</div>
+        <div class="post-meta">
+          <span class="post-tag tag-or">DevTools</span>
+          <span>· 阅读约 25 min</span>
+          <span>· Nix / Linux</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-icon">📡</div>
+      <div class="post-content">
+        <div class="post-title">SDR 入门：用 20 元的 USB 棒接收飞机 ADS-B 信号</div>
+        <div class="post-desc">RTL-SDR + dump1090，实时在地图上看飞机位置——无线电的大门就这么打开了。</div>
+        <div class="post-meta">
+          <span class="post-tag tag-green">Hardware</span>
+          <span>· 阅读约 12 min</span>
+          <span>· SDR / Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post">
+      <div class="post-icon">🧠</div>
+      <div class="post-content">
+        <div class="post-title">在树莓派上跑 llama.cpp：量化、推理速度调优全记录</div>
+        <div class="post-desc">Q4_K_M 量化模型 + Metal 加速，4B 模型在 Pi 5 上能跑到 8 token/s，实测数据全公开。</div>
+        <div class="post-meta">
+          <span class="post-tag tag-pk">AI / ML</span>
+          <span>· 阅读约 20 min</span>
+          <span>· C++ / Python</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ 加入社区 CTA ══ -->
+<section id="community" style="padding:clamp(56px,9vw,96px) 0 0">
+  <div class="cta-section">
+    <div class="cta-text">
+      <div class="cta-title">一起动手，一起搞事</div>
+      <p class="cta-sub">
+        加入 rogue-code 社区——在这里提问、分享项目、找到一起做东西的人。
+        不论是刚拿起烙铁，还是已经自己设计 PCB，都欢迎你。
+      </p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub 社区
+      </a>
+      <a class="btn btn-ghost" href="mailto:hi@rogue-code.com">✉️ 联系我们</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">1.2K+</div>
+        <div class="stat-label">社区成员</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">300+</div>
+        <div class="stat-label">开源项目</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">150+</div>
+        <div class="stat-label">原创教程</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">折腾热情</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 页脚 ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-name"><span class="slash">//</span>rogue-code</div>
+      <p>极客 DIY 社区。动手构建，重塑世界。<br>Cloudflare + Vultr · HTTPS · 开放运营</p>
+    </div>
+    <div class="footer-links">
+      <h4>探索</h4>
+      <ul>
+        <li><a href="#projects">精选项目</a></li>
+        <li><a href="#tutorials">最新教程</a></li>
+        <li><a href="#about">关于社区</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>参与</h4>
+      <ul>
+        <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#community">加入社区</a></li>
+        <li><a href="mailto:hi@rogue-code.com">联系我们</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>项目方向</h4>
+      <ul>
+        <li><a href="#projects">硬件 DIY</a></li>
+        <li><a href="#projects">嵌入式开发</a></li>
+        <li><a href="#projects">AI 应用</a></li>
+        <li><a href="#projects">开发工具链</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 rogue-code.com · 极客 DIY 社区</span>
+    <span>served over TLS · Cloudflare + Vultr</span>
+  </div>
+</footer>
+
+<script>
+/* 卡片鼠标光晕跟随 */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
+  });
+});
+</script>
 </body>
 </html>

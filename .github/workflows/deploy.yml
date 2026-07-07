@@ -1,0 +1,32 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up SSH
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$VPS_SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -H 202.182.111.22 >> ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<'EOF'
+          Host vultr
+              HostName 202.182.111.22
+              User zm
+              IdentityFile ~/.ssh/id_deploy
+              StrictHostKeyChecking yes
+          EOF
+
+      - name: Deploy
+        run: bash deploy.sh vultr
